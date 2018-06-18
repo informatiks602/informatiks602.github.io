@@ -1,0 +1,19 @@
+BX.ready(
+	function()
+	{
+		var wordDetailInfoNodes = document.querySelectorAll('.js-detail-info-block');
+		for(var i = 0; i < wordDetailInfoNodes.length; i++)
+		{
+			console.log(1);
+			var wordDetailInfo = new BXWordDetailInfo(
+				{
+					container: wordDetailInfoNodes[i],
+					listCode: 'lesson_detail_info',
+					showClass: 'learning-lesson-detail-show',
+					showAnimationClass: 'learning-lesson-detail-show-animation',
+					hideOpenedWhenShowNew: true
+				}
+			);
+		}
+	}
+);

@@ -1,0 +1,41 @@
+function ShowHint(element_id, arrowMargin, parent)
+{
+    var arrow_margin = parseInt(arrowMargin);
+    var hint_element = document.getElementById(element_id);
+    if(hint_element != null)
+    {
+        hint_element.style.display = 'flex';
+
+        var hint_element_height = hint_element.getBoundingClientRect().height;
+        var hint_element_width = hint_element.getBoundingClientRect().width;
+
+        var parent_element = document.getElementById(parent);
+        if(parent_element != null)
+        {
+            var parent_client_rect = parent_element.getBoundingClientRect();
+            var topPos = parent_client_rect.top;
+            var leftPos = parent_client_rect.left;
+            var left_padding = parent_client_rect.width / 2;
+            var arrow_padding = hint_element_width - arrowMargin;
+
+            hint_element.style.top = (topPos - hint_element_height) + 'px';
+            hint_element.style.left = (leftPos - hint_element_width + arrow_padding + left_padding) + 'px';
+        }
+
+        var hint_element_arrow = document.getElementById(element_id + '_arrow');
+        if(hint_element_arrow != null)
+        {
+            if(arrow_margin > 0)
+                hint_element_arrow.style.marginLeft = arrow_margin + 'px';
+        }
+    }
+}
+
+function HideHint(element_id)
+{
+    var hint_element = document.getElementById(element_id);
+    if(hint_element != null)
+    {
+        hint_element.style.display = 'none';
+    }
+}

@@ -1,0 +1,160 @@
+function BXWordDetailInfo(params)
+{
+	params = params || {};
+
+	this.container = params.container || null;
+	this.listCode = params.listCode || 'default_detail_info_list';
+	this.hideOpenedWhenShowNew = params.hideOpenedWhenShowNew || false;
+	this.hideDelay = params.hideDelay || 500;
+	this.showClass = params.showClass || '';
+	this.showAnimationClass = params.showAnimationClass || '';
+	this.init = false;
+	this.isOpen = false;
+
+	if(this.container != null)
+	{
+		if(this.hideOpenedWhenShowNew)
+		{
+			if(!Array.isArray(window[this.listCode]))
+			{
+				window[this.listCode] = [];
+			}
+			window[this.listCode].push(this);
+		}
+
+		this.word = this.container.querySelector('.js-detail-info-word');
+		this.body = this.container.querySelector('.js-detail-info-body');
+		this.bodyInner = this.container.querySelector('.js-detail-info-body-inner');
+
+		if(this.word != null && this.body != null && this.bodyInner != null)
+		{
+			this.body.detailInfo = this;
+			BX.bind(this.word, 'mouseover', BX.delegate(this.mouseOverHandler, this));
+			BX.bind(this.word, 'click', BX.delegate(this.toggle, this));
+			this.init = true;
+		}
+	}
+
+	return this;
+}
+
+BXWordDetailInfo.prototype.mouseOverHandler = function()
+{
+	if(!this.isShow)
+	{
+		this.show();
+	}
+};
+
+BXWordDetailInfo.prototype.toggle = function()
+{
+	if(this.init)
+	{
+		if(this.isShow)
+		{
+			this.hide();
+		}
+		else
+		{
+			this.show();
+		}
+	}
+};
+
+BXWordDetailInfo.prototype.show = function()
+{
+	if(this.init)
+	{
+		document.body.appendChild(this.body);
+		BX.addClass(this.body, this.showClass);
+		this.body.style.visibility = 'hidden';
+		var wordPos = BX.pos(this.word);
+		var windowSize = BX.GetWindowInnerSize();
+
+		//resize container, only if it's too long
+		if(windowSize.innerWidth / this.body.offsetWidth < 3)
+		{
+			var sizeFound = false;
+			var k = 0;
+			while(!sizeFound)
+			{
+				if(this.body.offsetWidth/this.body.offsetHeight > 4)
+				{
+					this.body.style.width = parseInt(this.body.offsetWidth / 1.1) + 'px';
+				}
+				else
+				{
+					sizeFound = true;
+				}
+
+				k++;
+				if(k === 20)
+				{
+					sizeFound = true;
+				}
+			}
+		}
+
+		if(wordPos.left > windowSize.innerWidth - wordPos.right)
+		{
+			this.body.style.left = wordPos.right - this.body.offsetWidth + 'px';
+		}
+		else
+		{
+			this.body.style.left = wordPos.left + 'px';
+		}
+
+		var topShowedPos = wordPos.top - this.body.offsetHeight;
+		this.body.style.top = topShowedPos + 'px';
+		var windowScroll = BX.GetWindowScrollPos();
+		if(windowScroll.scrollTop > topShowedPos)
+		{
+			this.body.style.top = wordPos.top + this.word.offsetHeight + 'px';
+		}
+		this.body.style.visibility = '';
+		BX.addClass(this.body, this.showAnimationClass);
+		this.bodyShowedMouseMoveHandler = BX.delegate(this.showedMouseMoveHandler, this);
+		BX.bind(document.body, 'mousemove', this.bodyShowedMouseMoveHandler);
+		if(this.hideOpenedWhenShowNew)
+		{
+			if(Array.isArray(window[this.listCode]))
+			{
+				for(var i = 0; i < window[this.listCode].length; i++)
+				{
+					var detailInfo = window[this.listCode][i];
+					if(detailInfo instanceof BXWordDetailInfo)
+					{
+						detailInfo.hide();
+					}
+				}
+			}
+		}
+		this.isShow = true;
+	}
+};
+
+BXWordDetailInfo.prototype.showedMouseMoveHandler = function(e)
+{
+	e = e || document.event;
+	clearTimeout(this.showTimer);
+	var _this = this;
+	if(!this.body.contains(e.target) && !this.word.contains(e.target))
+	{
+		this.showTimer = setTimeout(function()
+		{
+			_this.hide();
+		}, this.hideDelay);
+	}
+};
+
+BXWordDetailInfo.prototype.hide = function()
+{
+	if(this.init && this.isShow)
+	{
+		BX.unbind(document.body, 'mousemove', this.bodyShowedMouseMoveHandler);
+		this.container.appendChild(this.body);
+		BX.removeClass(this.body, this.showClass);
+		BX.removeClass(this.body, this.showAnimationClass);
+		this.isShow = false;
+	}
+};

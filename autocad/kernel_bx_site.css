@@ -1,0 +1,105 @@
+/* /bitrix/css/bx_site/service/detail_word.css?15070443011485 */
+/* /bitrix/css/bx_site/service/learning_partner_rest.css?1521468896293 */
+
+
+/* Start:/bitrix/css/bx_site/service/detail_word.css?15070443011485*/
+.learning-lesson-detail-block,
+.helpdesk-article-detail-block
+{
+	display: inline;
+	position: relative;
+}
+
+.learning-lesson-detail-word,
+.helpdesk-article-detail-word
+{
+	z-index: 2;
+	color: #00a1d9;
+	border-bottom: 1px dashed #00a1d9;
+	cursor: default;
+}
+
+.learning-lesson-detail-body,
+.helpdesk-article-detail-body
+{
+	display: none;
+	position: absolute;
+	z-index: 210;
+	opacity: 0;
+	transition: opacity 0.3s ease, transform 0.3s ease;
+	transform: translateY(-8px);
+	padding-bottom: 5px;
+}
+
+.helpdesk-article-detail-body
+{
+	font-size: 14px;
+	line-height: 18px;
+	font-family: "Helvetica Neue", Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
+	color: #6a828c;
+}
+
+.learning-lesson-detail-body.learning-lesson-detail-show,
+.helpdesk-article-detail-body.learning-lesson-detail-show
+{
+	display: block;
+}
+
+.learning-lesson-detail-body.learning-lesson-detail-show-animation,
+.helpdesk-article-detail-body.learning-lesson-detail-show-animation
+{
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.learning-lesson-detail-body-inner,
+.helpdesk-article-detail-body-inner
+{
+	background-color: #fff;
+	padding: 10px;
+	border-radius: 2px;
+	box-shadow: 0 5px 10px -5px #000;
+	overflow: hidden;
+	border: 1px solid #aeaeae;
+	display: block;
+}
+
+.learning-lesson-detail-edit-link-cnr,
+.helpdesk-article-detail-edit-link-cnr
+{
+	display: block;
+	margin-top: 6px;
+}
+
+.learning-lesson-detail-edit-link,
+.helpdesk-article-detail-edit-link
+{
+
+}
+/* End */
+
+
+/* Start:/bitrix/css/bx_site/service/learning_partner_rest.css?1521468896293*/
+.param-name-cell-level-2 {
+
+}
+
+.param-name-cell-level-3 {
+
+}
+
+.partner-rest-params-field-row-even {
+	background-color: #fff;
+}
+
+.partner-rest-params-field-row-odd {
+	background-color: #eee;
+}
+
+.learning-partner-rest-code-formatted
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	font-size: 12px;
+}
+/* End */

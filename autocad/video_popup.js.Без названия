@@ -1,0 +1,72 @@
+function startVideo()
+{
+	document.getElementById("videoIframe").contentWindow.start();
+	document.getElementById("videoIframe").contentWindow.setNewTitle();
+}
+
+function escVideoPopupHide(e)
+{
+	e = e || document.event;
+	if(e.keyCode == 27)
+	{
+		hideVideoPopup();
+	}
+}
+
+function hideVideoPopup()
+{
+	if(BX('learning_video_container') != null)
+	{
+		BX.hide(BX('learning_video_container'));
+		BX('learning_video_container').children[0].children[0].innerHTML = "";
+		if (BX('video_title') != null)
+		{
+			BX('video_title').innerHTML = "";
+		}
+	}
+}
+
+//Video popup
+BX.ready(function()
+{
+	BX.bindDelegate(
+		document.body, 'click', {className: 'video_learning' },
+		function ()
+		{
+			if (BX('learning_video_container') != null)
+			{
+				BX.show(BX('learning_video_container'));
+				BX('learning_video_container').children[0].children[0].innerHTML = this.children[0].innerHTML;
+				containerWidth = 	parseInt(getComputedStyle(this.children[0].children[0], null).getPropertyValue('border-left-width')) +
+					parseInt(this.children[0].children[0].getAttribute("width")) +
+					parseInt(getComputedStyle(this.children[0].children[0], null).getPropertyValue('border-right-width'));
+				containerHeight = 	parseInt(getComputedStyle(this.children[0].children[0], null).getPropertyValue('border-top-width')) +
+					parseInt(this.children[0].children[0].getAttribute("height")) +
+					parseInt(getComputedStyle(this.children[0].children[0], null).getPropertyValue('border-bottom-width'));
+				BX('learning_video_container').children[0].setAttribute("style", "width:" + containerWidth + "px; height: " + containerHeight + "px");
+				BX('learning_video_container').getElementsByTagName("IFRAME")[0].setAttribute("id", "videoIframe");
+				BX('learning_video_container').getElementsByTagName("IFRAME")[0].setAttribute("onload", "startVideo();");
+				BX.bind(document, "keydown", escVideoPopupHide)
+			}
+		}
+	);
+
+	BX.bind(BX('close_video_button'), 'click', hideVideoPopup);
+	BX.bind(window, "message", checkHideFromIFrame)
+});
+
+function checkHideFromIFrame(e)
+{
+	e = e || document.event;
+	console.log(e);
+	var status;
+	if(typeof e.data == "object")
+	{
+		status = e.data.status;
+	}
+
+	if(status == "close_window")
+	{
+		hideVideoPopup();
+	}
+}

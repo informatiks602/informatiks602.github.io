@@ -1,0 +1,12 @@
+function SetZoomForImages( selector) {
+    //Лупа для попап изображений
+    var images = document.querySelectorAll('.' + selector + ' a img');
+    var i ;
+    for(i = 0;i < images.length; i++)
+    {
+        if(images[i].parentNode.nodeName == "A" && images[i].parentNode.href.substring(0,18) == "javascript:ShowImg")
+        {
+            BX.addClass(images[i].parentNode, "popup-link");
+        }
+    }
+}
