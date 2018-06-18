@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+</head>
+<body style="font-family: 'Roboto', sans-serif;">
+
+<style>
+#video12 {
+  position: relative;
+  padding-bottom: 75%;
+}
+#video12 iframe {
+  position: absolute;
+  width: calc(90% - 5em);
+  height: 80%;
+}
+#video12 div {
+  position: absolute;
+  top: 0;
+    right: -145px;
+    width: 20em;
+    height: 100%;
+  overflow-y: auto;
+}
+#video12 span {
+  display: block;
+  text-align: center;
+   width: 150px;
+   z-index: 10000;
+
+}
+#video12 span:hover {
+  color: #ff3200;
+  cursor: pointer;
+}
+#video12 span:focus {
+  color: blue;
+}
+</style>
+
+<div id="video12">
+  <iframe width="600"  src="http://www.youtube.com/embed/YG_91PMR8uw?rel=0"  frameborder="0"></iframe>
+  <div>
+    <span data-video="YG_91PMR8uw" tabindex="0">Настройка
+пользовательского интерфейса в AutoCAD</span>
+    <span data-video="Lmkxd1YUYeE" tabindex="0">серия 2</span>
+    <span data-video="scvZd5kv9H0" tabindex="0">серия 3</span>
+      <span data-video="e05RsNZjqFQ" tabindex="0">серия 2</span>
+    <span data-video="1blBa3rqXtI" tabindex="0">серия 3</span>
+      <span data-video="_DMr4JtaPuo" tabindex="0">серия 2</span>
+    <span data-video="mUMndPpf1lI" tabindex="0">серия 3</span>
+      <span data-video="eWcypZmyZno" tabindex="0">серия 2</span>
+    <span data-video="LplbvGorqfU" tabindex="0">серия 3</span>
+      <span data-video="VgBJRONUvmI" tabindex="0">серия 2</span>
+    <span data-video="qrP6r4tDsyg" tabindex="0">серия 3</span>
+      <span data-video="LplbvGorqfU" tabindex="0">серия 2</span>
+    <span data-video="xsjdIS8GbgI" tabindex="0">серия 3</span>
+      <span data-video="zfko4P3vq_M" tabindex="0">серия 2</span>
+    <span data-video="HW9WDfyvS-8" tabindex="0">серия 3</span>
+    <span data-video="KN_ua-Rq3MI" tabindex="0">серия 3</span>
+    <span data-video="p7wwOsjJbFc" tabindex="0">серия 3</span>
+  </div>
+</div>
+
+<script>
+var IMG = document.querySelectorAll('#video12 span'),
+    IFRAME = document.querySelector('#video12 iframe');
+for (var i = 0; i < IMG.length; i++) {
+  IMG[i].onclick = function() {
+    IFRAME.src = 'http://www.youtube.com/embed/' + this.dataset.video + '?rel=0&autoplay=1';
+    if(this.dataset.end) IFRAME.src = IFRAME.src.replace(/([\s\S]*)/g, '$1&end=' + this.dataset.end);
+    if(this.dataset.start) IFRAME.src = IFRAME.src.replace(/([\s\S]*)/g, '$1&start=' + this.dataset.start);
+    this.style.backgroundColor='rgba(0,0,0,.2)';
+  }
+}
+</script>
+
+</body>
+</html>
